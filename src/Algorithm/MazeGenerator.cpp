@@ -8,7 +8,7 @@
 using namespace std;
 
 //Check xem 1 cell có đủ điều kiện để tạo thành đường hay không
-static bool check_cell(int x,int y,const std::vector<std::vector<Cell>> &grid,int height,int width){
+static bool check_cell(int x,int y,const std::vector<std::vector<cell>> &grid,int height,int width){
     int n=0;
     if(!(x>=0&&y>=0&&x<width&&y<height&&!grid[y][x].visited)){
         return false;
@@ -34,11 +34,11 @@ static bool check_cell(int x,int y,const std::vector<std::vector<Cell>> &grid,in
     return true;
 }
 //Thuật toán tạo cell đường và ngẫu nhiên kiểm tra 4 phía có hợp lệ hay không DFS
-static void carve_maze(int x,int y,std::vector<std::vector<Cell>> &grid,int height,int width,int cell_size){
+static void carve_maze(int x,int y,std::vector<std::vector<cell>> &grid,int height,int width,int cell_size){
     grid[y][x].is_block=false;
     grid[y][x].visited=true;
-    get_current_maze(grid,cell_size);
-    WaitTime(0.02);
+    get_current_state(grid,cell_size);
+    WaitTime(DRAW_GEN_TIME);
     int dirs[4]={0,1,2,3};//0 :lên
                           //1 Xuống
                           //2 Trái
@@ -69,10 +69,16 @@ static void carve_maze(int x,int y,std::vector<std::vector<Cell>> &grid,int heig
             carve_maze(nx,ny,grid,height,width,cell_size);
         }
     }
+    
 }
 
-void generate_maze(std::vector<std::vector<Cell>> &grid,int height,int width,int cell_size){
+void generate_maze(std::vector<std::vector<cell>> &grid,int height,int width,int cell_size){
     create_maze(grid,height,width);
     carve_maze(1,1,grid,height,width,cell_size);
+    for ( int i=0;i<height;i++){
+        for ( int j =0; j < width ; j++){
+            grid[i][j].visited=false;
+        }
+    }
 }
 

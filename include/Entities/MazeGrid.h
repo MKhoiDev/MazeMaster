@@ -1,9 +1,12 @@
 #pragma once
 #include <vector>
-struct Cell{
+struct cell{
     bool is_block;
     bool visited;
-    Cell(bool bl=true,bool vi=false):is_block(bl),visited(vi){}
+    int parent_x;
+    int parent_y;
+    cell(bool bl=true,bool vi=false,int non=0):is_block(bl),visited(vi),parent_x(non),parent_y(non){}
 };
-void create_maze(std::vector<std::vector<Cell>> &grid,int height,int width);
-
+void create_maze(std::vector<std::vector<cell>> &grid,const int &height,const int &width);
+void reset_maze(std::vector<std::vector<cell>> &grid,const int &height,int const &width);
+void reset_maze_solve(std::vector<std::vector<cell>> &grid,const int &height,int const &width);
