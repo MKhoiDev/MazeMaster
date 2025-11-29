@@ -17,6 +17,7 @@ void engine::solve_maze(){
 }
 void engine::init(){
     ::setup_window(height,width,cell_size);
+    load_resource();
     SetTargetFPS(0);
 }
 void engine::update(){
@@ -30,10 +31,13 @@ void engine::update(){
         get_show_solution(true
         );
     }
+    handle_ui_input();
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)||IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
-        get_show_solution(false);
-        get_position(start_x,end_x,start_y,end_y,cell_size);
-        update_start_end(grid,start_x,start_y,end_x,end_y);
+        if (GetMouseX() > SYSTEM_WIDTH){
+            get_show_solution(false);
+            get_position(start_x,end_x,start_y,end_y,cell_size);
+            update_start_end(grid,start_x,start_y,end_x,end_y);
+        }
     }
 }
 
@@ -45,5 +49,6 @@ void engine::run(){
         ::get_current_state(grid,cell_size);
         update();
     }
+    unload_resource();
     CloseWindow();
 }

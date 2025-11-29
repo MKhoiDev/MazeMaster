@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#define DRAW_GEN_TIME 0 //s
+
 struct cell;
 
 static bool check_cell(int x,int y,const std::vector<std::vector<cell>> &grid,int height,int width);

@@ -37,8 +37,10 @@ static bool check_cell(int x,int y,const std::vector<std::vector<cell>> &grid,in
 static void carve_maze(int x,int y,std::vector<std::vector<cell>> &grid,int height,int width,int cell_size){
     grid[y][x].is_block=false;
     grid[y][x].visited=true;
-    // get_current_state(grid,cell_size);
-    // WaitTime(DRAW_GEN_TIME);
+    if(is_turn_on_draw_when_generate()){
+        get_current_state(grid,cell_size);
+        WaitTime(draw_gen_time());
+    }
     int dirs[4]={0,1,2,3};//0 :lên
                           //1 Xuống
                           //2 Trái

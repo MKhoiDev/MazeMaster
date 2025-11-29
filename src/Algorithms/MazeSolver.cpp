@@ -2,6 +2,7 @@
 #include "Core/UI.h"
 #include "Entities/MazeGrid.h"
 #include <iostream>
+#include "raylib.h"
 
 using namespace std;
 
@@ -20,7 +21,10 @@ static bool depth_first_search_algorithm(int x,int y,std::vector<std::vector<cel
     if(grid[y][x].is_end==true){
         return true;
     }
-    // get_current_state(grid,cell_size);
+    if(is_turn_on_draw_when_solve()){
+        get_current_state(grid,cell_size);
+        WaitTime(draw_solve_time());
+    }
     parent_x=x;
     parent_y=y;
     for ( int i=0;i<4;i++){
