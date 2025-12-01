@@ -4,7 +4,7 @@
 #include <iostream>
 
 bool show_solution=false;
-void get_show_solution(bool solution){
+void set_show_solution(bool solution){
     show_solution=solution;
 }
 
@@ -36,6 +36,7 @@ void handle_ui_input(){
         if(CheckCollisionPointRec(mouse_point,rect_show_gen_step)){
             TURN_ON_DRAW_WHEN_GENERATE=!TURN_ON_DRAW_WHEN_GENERATE;
         }
+        
     }
 }
 static void draw_maze(const std::vector<std::vector<cell>> &grid,int cell_size){

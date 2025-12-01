@@ -8,6 +8,9 @@
 using namespace std;
 
 //Check xem 1 cell có đủ điều kiện để tạo thành đường hay không
+double get_current_empty_space(){
+    return EMPTY_SPACE;
+}
 static bool check_cell(int x,int y,const std::vector<std::vector<cell>> &grid,int height,int width){
     int n=0;
     if(!(x>=0&&y>=0&&x<width&&y<height&&!grid[y][x].visited)){
@@ -75,9 +78,11 @@ static void carve_maze(int x,int y,std::vector<std::vector<cell>> &grid,int heig
 }
 
 void break_wall(std::vector<std::vector<cell>> &grid,int height,int width){
-    int total=(height*width)*1/100;
+    int total=(height*width)*EMPTY_SPACE/100;
     int i=0;
-    while(i<total){
+    int k=0;
+    while(i<total&&k<height*width){
+        k++;
         int x = rand() % (width - 2) + 1;
         int y = rand() % (height - 2) + 1;
         if(grid[y][x].is_block){
@@ -98,4 +103,6 @@ void generate_maze(std::vector<std::vector<cell>> &grid,int height,int width,int
     }
     break_wall(grid,height,width);
 }
-
+void update_empty_space(double new_empty_space){
+    EMPTY_SPACE=new_empty_space;
+}

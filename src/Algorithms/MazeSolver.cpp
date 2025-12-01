@@ -2,6 +2,7 @@
 #include "Core/UI.h"
 #include "Entities/MazeGrid.h"
 #include <iostream>
+#include <deque>
 #include "raylib.h"
 
 using namespace std;
@@ -17,7 +18,7 @@ static bool depth_first_search_algorithm(int x,int y,std::vector<std::vector<cel
     grid[y][x].visited=true;
     grid[y][x].parent_x=parent_x;
     grid[y][x].parent_y=parent_y;
-    cout << "Dang duyet: " << grid[y][x].parent_x << ", " << grid[y][x].parent_y << endl;
+    // cout << "Dang duyet: " << grid[y][x].parent_x << ", " << grid[y][x].parent_y << endl;
     if(grid[y][x].is_end==true){
         return true;
     }
@@ -66,6 +67,59 @@ void depth_first_search(std::vector<std::vector<cell>> &grid,const int &height,c
     if(depth_first_search_algorithm(start_x,start_y,grid,height,width,cell_size,start_x,start_y)){
     }
     else{
-        
     }
+}
+void breadth_first_search(std::vector<std::vector<cell>> &grid,const int &height,const int &width,const int& cell_size){
+    deque<Point> queue;
+    reset_maze_solve(grid,height,width);
+    int start_x=1;
+    int start_y=1;
+    for(int i=0;i<height;i++){
+        for (int j=0;j<width;j++){
+            if(grid[i][j].is_start==true){
+                start_x=j;
+                start_y=i;
+            }
+        }
+    }
+    Point start;
+    start.x=start_x;
+    start.y=start_y;
+
+    queue.push_back(start);
+    while(queue.size()>0){
+        Point point=queue[0];
+        if(grid[point.y][point.x].is_end){
+            break;
+        }
+        for(int i=0;i<4;i++){
+                int x=point.x;
+                int y=point.y;
+                if(i==0){
+                    x+=1;
+                  }
+                if(i==1){
+                    x-=1;
+                }
+                if(i==2){
+                    y+=1;
+                }
+                if(i==3){
+                    y-=1;
+                }
+                if(check_cell(grid[y][x])){
+                    grid[y][x].parent_x=point.x;
+                    grid[y][x].parent_y=point.y;
+                    queue.push_back({x,y});
+                    grid[y][x].visited=true;
+                }
+            }
+            queue.pop_front();
+            if(is_turn_on_draw_when_solve()){
+            get_current_state(grid,cell_size);
+            WaitTime(draw_solve_time());
+            }
+            }
+        
+        
 }
