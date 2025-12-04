@@ -4,6 +4,8 @@
 
 using namespace std;
 
+
+
 class engine{
     private:
     int height ;
@@ -26,6 +28,6 @@ class engine{
     void  update();
     void  generate_maze();
     void  solve_maze();
-
+    void  change_algo();
 
 };

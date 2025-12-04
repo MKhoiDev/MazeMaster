@@ -13,13 +13,20 @@ bool is_turn_on_draw_when_generate();
 static double DRAW_GEN_TIME=0.01;
 double draw_gen_time();
 
-static bool TURN_ON_DRAW_WHEN_SOLVE=true;
+static bool TURN_ON_DRAW_WHEN_SOLVE=false;
 bool is_turn_on_draw_when_solve();
 static double DRAW_SOLVE_TIME=0; //s
 double draw_solve_time();
 struct cell;
 
-void handle_ui_input();
+
+enum class user_action{
+    NONE,
+    GENERATE,
+    SOLVE,
+    CHANGE_ALGO,
+};
+user_action handle_ui_input();
 
 static void draw_maze(const std::vector<std::vector<cell>> &grid,int cell_size);
 void setup_window(const int& height,const int& width,int& cell_size );

@@ -38,6 +38,9 @@ void reset_maze(std::vector<std::vector<cell>> &grid,const int &height,int const
             grid[i][j].is_end=false;
             grid[i][j].parent_x=0;
             grid[i][j].parent_y=0;
+            grid[i][j].f=1e9;
+            grid[i][j].g=1e9;
+
         }
     }
 }
@@ -45,8 +48,10 @@ void reset_maze_solve(std::vector<std::vector<cell>> &grid,const int &height,int
     for (int i=0;i<height;i++){
         for ( int j=0;j<width;j++){
             grid[i][j].visited=false;
-            grid[i][j].parent_x=1;
-            grid[i][j].parent_y=1;
+            grid[i][j].parent_x=0;
+            grid[i][j].parent_y=0;
+            grid[i][j].f=1e9;
+            grid[i][j].g=1e9;
         }
     }
 }

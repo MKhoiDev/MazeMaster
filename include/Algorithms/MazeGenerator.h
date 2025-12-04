@@ -4,7 +4,7 @@
 
 struct cell;
 
-static double EMPTY_SPACE=0;
+static double EMPTY_SPACE=7;
 
 static bool check_cell(int x,int y,const std::vector<std::vector<cell>> &grid,int height,int width);
 static void carve_maze(int x,int y,std::vector<std::vector<cell>> &grid,int height,int width,int cell_size);

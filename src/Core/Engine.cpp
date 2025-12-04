@@ -12,11 +12,62 @@ engine::engine(int height ,int width):height(height),width(width),cell_size(0),i
 void engine::generate_maze(){
     ::generate_maze(grid,height,width,cell_size);
 }
+algo algo_type=algo::BFS;
+void engine::change_algo(){
+    if(algo_type==algo::BFS){
+        algo_type=algo::DFS;
+    }
+    else if (algo_type==algo::DFS){
+        algo_type=algo::A_STAR;
+    }
+    else if (algo_type==algo::A_STAR){
+        algo_type=algo::BFS;
+    }
+    int algo_type_int_ui=-1;
+    if(algo_type==algo::BFS){
+        algo_type_int_ui=0;
+    }
+    else if(algo_type==algo::DFS){
+        algo_type_int_ui=1;
+    }
+    else if(algo_type==algo::A_STAR){
+        algo_type_int_ui=2;
+    }
+
+    ::change_algo_type_int_ui(algo_type_int_ui);
+}
 void engine::solve_maze(){
+    set_show_solution(false);
     if(IsKeyPressed(KEY_D)){
-    ::depth_first_search(grid,height,width,cell_size);}
+    ::depth_first_search(grid,height,width,cell_size);
+    set_show_solution(true);
+    return;
+    }
     if(IsKeyPressed(KEY_B)){
-    ::breadth_first_search(grid,height,width,cell_size);}
+    ::breadth_first_search(grid,height,width,cell_size);
+    set_show_solution(true);
+    return;
+    }
+    if(IsKeyPressed(KEY_A)){
+    ::a_star(grid,height,width,cell_size);
+    set_show_solution(true);
+    return;
+    }
+    if(algo_type==algo::DFS){
+    ::depth_first_search(grid,height,width,cell_size);
+    set_show_solution(true);
+    return;
+    }
+    if(algo_type==algo::BFS){
+    ::breadth_first_search(grid,height,width,cell_size);
+    set_show_solution(true);
+    return;
+    }
+    if(algo_type==algo::A_STAR){
+    ::a_star(grid,height,width,cell_size);
+    set_show_solution(true);
+    return;
+    }
 }
 void engine::init(){
     ::setup_window(height,width,cell_size);
@@ -28,12 +79,23 @@ void engine::update(){
         generate_maze();
         set_show_solution(false);
     }
-    if(IsKeyPressed(KEY_D)||IsKeyPressed(KEY_B)){
-        set_show_solution(false);
+    if(IsKeyPressed(KEY_D)||IsKeyPressed(KEY_B)||IsKeyPressed(KEY_A)){
         solve_maze();
-        set_show_solution(true);
     }
-    handle_ui_input();
+    user_action action=handle_ui_input();
+    switch(action){
+        case user_action::GENERATE:
+            generate_maze();
+            break;
+        case user_action::CHANGE_ALGO:
+            change_algo();
+            break;
+        case user_action::SOLVE:
+            solve_maze();
+            break;
+    }
+
+
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)||IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
         if (GetMouseX() > SYSTEM_WIDTH){
             set_show_solution(false);

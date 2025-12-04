@@ -99,6 +99,9 @@ void generate_maze(std::vector<std::vector<cell>> &grid,int height,int width,int
     for ( int i=0;i<height;i++){
         for ( int j =0; j < width ; j++){
             grid[i][j].visited=false;
+            grid[i][j].f=1e9;
+            grid[i][j].g=1e9;
+
         }
     }
     break_wall(grid,height,width);

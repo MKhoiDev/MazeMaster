@@ -24,10 +24,15 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # 6. Tạo file chạy
 add_executable(MazeMaster ${SOURCES})
+if(MSVC)
+  # Tăng Stack lên 10MB (/STACK:bytes)
+  target_link_options(MazeMaster PRIVATE "/STACK:100000000")
+endif()
 
 # 7. GẮN KẾT (Linking)
 # Lệnh gắn Raylib vào MazeMaster
 target_link_libraries(MazeMaster PRIVATE raylib)
+
 
 
 # 8. Copy tài nguyên (Hình ảnh/Font) ra thư mục chạy
